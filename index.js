@@ -1,11 +1,12 @@
 const exec = require('child_process').exec;
 const os = require('os');
+const fs = require('fs');
 
 const platform = os.platform();
 
 const TYPES = [
   'save',
-  'open'
+  'open',
 ]
 
 module.exports = (type) => {
@@ -13,17 +14,23 @@ module.exports = (type) => {
     switch (type.toLowerCase()) {
       case 'open':
         exec('kdialog --getopenfilename .', (err, stdout, stderr) => {
-          console.log(`stdout: ${stdout}`);
           if (err !== null) {
-            console.log(`exec error: ${err}`);
+            console.log(`error: ${err}`);
+          } else {
+            console.log(`file_name: ${stdout}`);
+            return fs.readFile(stdout, 'utf8');
           }
+          console.log(`stdout: ${stdout}`);
+
         });
         break;
       case 'save':
         exec('kdialog --getsavefilename .', (err, stdout, stderr) => {
-          console.log(`stdout: ${stdout}`);
           if (err !== null) {
-            console.log(`exec error: ${err}`);
+            console.log(`error: ${err}`);
+          } else {
+            console.log(`file_name: ${stdout}`);
+            return fs.readFile(stdout, 'utf8');
           }
         });
         break;

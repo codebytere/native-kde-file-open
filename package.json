@@ -16,13 +16,14 @@
     "linux"
   ],
   "author": "Shelley Vohr",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/codebytere/native-kde-file-open/issues"
   },
   "homepage": "https://github.com/codebytere/native-kde-file-open#readme",
   "dependencies": {
     "child_process": "^1.0.2",
+    "fs": "0.0.1-security",
     "os": "^0.1.1"
   }
 }
