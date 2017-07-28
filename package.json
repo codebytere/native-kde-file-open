@@ -1,0 +1,28 @@
+{
+  "name": "native-kde-file-open",
+  "version": "0.0.1",
+  "description": "open native file dialog on kde plasma desktop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codebytere/native-kde-file-open.git"
+  },
+  "keywords": [
+    "kde",
+    "plasma",
+    "linux"
+  ],
+  "author": "Shelley Vohr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codebytere/native-kde-file-open/issues"
+  },
+  "homepage": "https://github.com/codebytere/native-kde-file-open#readme",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "os": "^0.1.1"
+  }
+}
