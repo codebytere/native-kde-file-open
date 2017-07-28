@@ -13,8 +13,8 @@ To use:
   const nativePicker = require('native-kde-file-open');
 
   // to open single file or multiple files
-  nativePicker('OPEN');
+  const openedFileBuffer = nativePicker('OPEN');
 
   // to save single file or multiple files
-  nativePicker('SAVE');
+  const savedFileBuffer = nativePicker('SAVE');
 ```
