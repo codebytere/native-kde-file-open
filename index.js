@@ -1,35 +1,44 @@
-const execSync = require('child_process').execSync;
+const exec = require('child_process').exec;
 const os = require('os');
 const fs = require('fs');
 
 const platform = os.platform();
 
-const TYPES = [
-  'save',
-  'open',
-]
-
-module.exports = (type) => {
-  if (platform === 'linux') {
-    switch (type.toLowerCase()) {
-      case 'open':
-        execSync('kdialog --getopenfilename .', (err, stdout, stderr) => {
-          if (err !== null) { throw new Error(err); }
-          console.log(`file_name: ${stdout}`);
-          return fs.readFileSync(stdout.trim());
-        });
-        break;
-      case 'save':
-        execSync('kdialog --getsavefilename .', (err, stdout, stderr) => {
-          if (err !== null) { throw new Error(err); }
-          console.log(`file_name: ${stdout}`);
-          return fs.readFileSync(stdout.trim());
-        });
-        break;
-      default:
-        throw new Error('Invalid dialog box type specified.');
-    }
-  } else {
-    throw new Error('This is intended to be run on Linux KDE distributions.')
+// open a file with kdialog
+function openFile() {
+  if (platform !== 'linux') {
+    throw new Error('Module intended to be run on Linux KDE distributions.');
   }
+  return new Promise((resolve, reject) => {
+    exec('kdialog --getopenfilename .', (err, stdout, stderr) => {
+      if (err !== null) {
+        throw new Error(`error: ${err}`);
+      }
+      console.log(`file_name: ${stdout}`);
+      const contents = fs.readFileSync(stdout.trim(), 'utf8');
+      resolve(contents);
+    });
+  });
+}
+
+// save a file with kdialog
+function saveFile() {
+  if (platform !== 'linux') {
+    throw new Error('Module intended to be run on Linux KDE distributions.');
+  }
+  return new Promise((resolve, reject) => {
+    exec('kdialog --getsavefilename .', (err, stdout, stderr) => {
+      if (err !== null) {
+        throw new Error(`error: ${err}`);
+      }
+      console.log(`file_name: ${stdout}`);
+      const contents = fs.readFileSync(stdout.trim(), 'utf8');
+      resolve(contents);
+    });
+  });
+}
+
+module.exports = {
+  openFile,
+  saveFile,
 }
