@@ -1,6 +1,6 @@
 {
   "name": "native-kde-file-open",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "open native file dialog on kde plasma desktop",
   "main": "index.js",
   "scripts": {

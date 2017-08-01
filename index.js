@@ -4,38 +4,35 @@ const fs = require('fs');
 
 const platform = os.platform();
 
-// open a file with kdialog
-function openFile() {
-  if (platform !== 'linux') {
-    throw new Error('Module intended to be run on Linux KDE distributions.');
-  }
-  return new Promise((resolve, reject) => {
-    exec('kdialog --getopenfilename .', (err, stdout, stderr) => {
-      if (err !== null) {
-        throw new Error(`error: ${err}`);
-      }
-      console.log(`file_name: ${stdout}`);
-      const contents = fs.readFileSync(stdout.trim(), 'utf8');
-      resolve(contents);
-    });
-  });
+// explicit call to nativePicker with --getopenfilename command
+function openFile(cb) {
+  return nativePicker('kdialog --getopenfilename .', cb);
 }
 
-// save a file with kdialog
-function saveFile() {
+// explicit call to nativePicker with --getsavefilename command
+function saveFile(cb) {
+  return nativePicker('kdialog --getsavefilename .', cb);
+}
+
+// call native file dialog and return either promise or callback
+function nativePicker(execStr, cb) {
   if (platform !== 'linux') {
     throw new Error('Module intended to be run on Linux KDE distributions.');
   }
-  return new Promise((resolve, reject) => {
-    exec('kdialog --getsavefilename .', (err, stdout, stderr) => {
-      if (err !== null) {
-        throw new Error(`error: ${err}`);
+  const result = new Promise((resolve, reject) => {
+    exec(execStr, (err, stdout, stderr) => {
+      if (err) {
+        return reject(err);
       }
-      console.log(`file_name: ${stdout}`);
-      const contents = fs.readFileSync(stdout.trim(), 'utf8');
-      resolve(contents);
+      fs.readFile(stdout.trim(), 'utf8', (err, ret) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(ret);
+      });
     });
   });
+  return (cb) ? result.then(val => cb(null, val)).catch(cb) : result;
 }
 
 module.exports = {
