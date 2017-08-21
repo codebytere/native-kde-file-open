@@ -9,22 +9,22 @@ To use:
   const nativePicker = require('native-kde-file-open');
 
   // to open single file or multiple files, with promise
-  nativePicker.openFile().then(ret =>{
+  nativePicker.openFile().then(ret => {
     console.log(ret);
   });
 
   // to open single file or multiple files, with callback
-  nativePicker.openFile((err, ret) =>{
+  nativePicker.openFile((err, ret) => {
     console.log(ret);
   });
 
   // to save single file or multiple files, with promise
-  nativePicker.saveFile().then(ret =>{
+  nativePicker.saveFile().then(ret => {
     console.log(ret);
   });
 
   // to save single file or multiple files, with callback
-  nativePicker.saveFile((err, ret) =>{
+  nativePicker.saveFile((err, ret) => {
     console.log(ret);
   });
 ```
